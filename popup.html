@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQL Client</title>
+    <link rel="stylesheet" href="popup.css" />
+    <link rel="icon" type="image/png" href="assets/logo.png" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <img src="assets/logo.png" alt="SQL Client" class="logo" />
+        <h1>SQL Client</h1>
+      </header>
+
+      <form id="connectionForm" class="connection-form">
+        <div class="form-group">
+          <label for="host">Host:</label>
+          <input
+            type="text"
+            id="host"
+            placeholder="localhost"
+            value="localhost"
+            required
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="port">Port:</label>
+            <input
+              type="number"
+              id="port"
+              placeholder="3306"
+              value="3306"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="database">Database:</label>
+            <div class="database-select-wrapper database-select-grid">
+              <div
+                class="database-input-stack"
+                style="position: relative; width: 100%; min-width: 0"
+              >
+                <select
+                  id="databaseDropdown"
+                  title="Selecionar base de dados"
+                ></select>
+                <input
+                  type="text"
+                  id="database"
+                  placeholder="database_name"
+                  required
+                />
+              </div>
+              <button
+                type="button"
+                id="loadDatabasesBtn"
+                title="Carregar bases de dados"
+              >
+                <span class="btn-icon">🔄</span>
+                <span
+                  class="spinner"
+                  style="
+                    display: none;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 18px;
+                    height: 18px;
+                  "
+                >
+                  <svg viewBox="0 0 50 50" style="width: 100%; height: 100%">
+                    <circle
+                      cx="25"
+                      cy="25"
+                      r="20"
+                      fill="none"
+                      stroke="#0078d7"
+                      stroke-width="4"
+                      stroke-linecap="round"
+                      stroke-dasharray="31.4 31.4"
+                      stroke-dashoffset="0"
+                    >
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        from="0 25 25"
+                        to="360 25 25"
+                        dur="0.8s"
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              id="databaseErrorMsg"
+              style="
+                color: #c00;
+                font-size: 13px;
+                min-height: 18px;
+                margin-top: 2px;
+              "
+            ></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              placeholder="root"
+              value="root"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="password" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="query">SQL Query:</label>
+          <textarea
+            id="query"
+            placeholder="SELECT * FROM table_name LIMIT 10;"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" id="executeBtn" class="execute-btn">
+          <span class="btn-text">Execute Query</span>
+          <span class="loading-spinner" style="display: none">⟳</span>
+        </button>
+      </form>
+
+      <div
+        id="queryHistory"
+        class="query-history-section"
+        style="display: none"
+      ></div>
+
+      <div id="results" class="results-section" style="display: none">
+        <h3 class="results-title">Resultados da Consulta</h3>
+        <div class="results-title-spacing"></div>
+        <div id="resultsContent" class="results-content"></div>
+      </div>
+
+      <div id="error" class="error-section" style="display: none">
+        <h3>Error:</h3>
+        <pre id="errorContent" class="error-content"></pre>
+      </div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
